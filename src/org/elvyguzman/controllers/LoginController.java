@@ -53,6 +53,13 @@ public class LoginController implements Initializable{
     
     @FXML
     public void eventoAceptar(ActionEvent evento){
+        if(txtEmail.getText().isEmpty() || txtPassword.getText().isEmpty()){
+            mostrarAlerta(Alert.AlertType.WARNING,
+                    "Campos vacíos",
+                    "No se puede proceder por datos incompletos",
+                    "Debes llenar todos los campos antes de continuar");
+            return;
+        }
         buscarUsuario();
         limpiarControles();
     }
@@ -90,12 +97,17 @@ public class LoginController implements Initializable{
                         "Falló inicio de sesión",
                         "Contraseña ingresada es incorrecta");
                     case "OK" -> {
-                        String email = resultado.getString("email");
-                        usuario.setEmail(email);
+                        Usuario usuarioValido = new Usuario();
+                        usuarioValido.setEmail(resultado.getString("email"));
+                        usuarioValido.setPassword(txtPassword.getText());
+                        Usuario.usuarioSesion = usuarioValido;
+                        
+                        System.out.println("Usuario válido: " + Usuario.usuarioSesion.getEmail());
+                        
                         mostrarAlerta(Alert.AlertType.INFORMATION,
-                                "Bienvenido!!!",
-                                "Inicio de sesión exitoso",
-                                "Todo esta bien bienvenido al programa " + usuario.getEmail());
+                        "Bienvenido!!!",
+                        "Inicio de sesión exitoso",
+                        "Todo esta bien, bienvenido al programa " + usuarioValido.getEmail());
                     }
                     default -> mostrarAlerta(Alert.AlertType.ERROR,
                         "Login",

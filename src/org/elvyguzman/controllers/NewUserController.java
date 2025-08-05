@@ -109,6 +109,18 @@ public class NewUserController implements Initializable {
     
     @FXML
     public void eventoAceptar(ActionEvent event){
+        if(txtNombres.getText().isEmpty() ||
+                txtApellidos.getText().isEmpty() ||
+                txtEmail.getText().isEmpty() ||
+                txtPassword.getText().isEmpty())
+        {
+            Alert alertaCampos = new Alert(AlertType.WARNING);
+            alertaCampos.setTitle("Campos vacíos");
+            alertaCampos.setHeaderText("No podemos acceder por falta de datos");
+            alertaCampos.setContentText("Por favor llena todos los campos antes de continuar.");
+            alertaCampos.showAndWait();
+            return;
+        }
         agregarPersona();
         String id = idPersona();
         agregarUsuario(id);
