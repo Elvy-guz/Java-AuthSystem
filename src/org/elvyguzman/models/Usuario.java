@@ -6,6 +6,8 @@ public class Usuario {
     private String password; 
     private String idPersona;
     
+    public static Usuario usuarioSesion;
+    
     public Usuario (){}    
     
     public Usuario(String idUsuario, String email, String password, String idPersona){
