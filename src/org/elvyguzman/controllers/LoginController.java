@@ -60,6 +60,15 @@ public class LoginController implements Initializable{
                     "Debes llenar todos los campos antes de continuar");
             return;
         }
+        
+        if(!validarEmail(txtEmail.getText())){
+            mostrarAlerta(Alert.AlertType.ERROR,
+                    "Email inválido",
+                    "No es un formato de correo",
+                    "Ingrese un correo válido");
+            return;
+        }
+        
         buscarUsuario();
         limpiarControles();
     }
@@ -67,6 +76,10 @@ public class LoginController implements Initializable{
     private void limpiarControles(){
         txtEmail.setText("");
         txtPassword.setText("");
+    }
+    
+    private boolean validarEmail(String email){
+        return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     }
     
     private void buscarUsuario(){

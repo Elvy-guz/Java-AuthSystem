@@ -107,6 +107,11 @@ public class NewUserController implements Initializable {
         }
     }
     
+    private boolean validarEmail(String email){
+        return email != null && email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
+    
+    
     @FXML
     public void eventoAceptar(ActionEvent event){
         if(txtNombres.getText().isEmpty() ||
@@ -121,6 +126,17 @@ public class NewUserController implements Initializable {
             alertaCampos.showAndWait();
             return;
         }
+        
+        if(!validarEmail(txtEmail.getText())){
+            Alert alertaEmail = new Alert(AlertType.ERROR);
+            alertaEmail.setTitle("Email inválido");
+            alertaEmail.setHeaderText("No es un formato de correo");
+            alertaEmail.setContentText("Ingrese un correo válido");
+            alertaEmail.showAndWait();        
+            return;
+        }
+        
+        
         agregarPersona();
         String id = idPersona();
         agregarUsuario(id);
